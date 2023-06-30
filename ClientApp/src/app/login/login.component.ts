@@ -5,6 +5,7 @@ import { LocalStorageService } from '../services/local-storage.service';
 import jwt_decode from 'jwt-decode';
 import { Token } from '../models/token';
 import { environment } from 'src/environments/environment';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,11 @@ export class LoginComponent {
   password!: string;
   apiUrl: string = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router: Router, private localStorageService: LocalStorageService) { }
+  constructor(
+    private http: HttpClient, 
+    private router: Router, 
+    private localStorageService: LocalStorageService,
+    private notificationService: NotificationService) { }
 
   login() {
     const body = { username: this.username, password: this.password };
@@ -33,6 +38,7 @@ export class LoginComponent {
         const user = tokenInfo.unique_name; // get token expiration dateTime
 
         this.localStorageService.setItem('user', user)
+        this.notificationService.success("Logged in")
         this.router.navigate(['/todo']); // redirect to TodoComponent
       },
       error: (e) => console.error(e)
@@ -42,7 +48,7 @@ export class LoginComponent {
   getDecodedAccessToken(token: string): any {
     try {
       return jwt_decode(token);
-    } catch (Error) {
+    } catch (error) {
       return null;
     }
   }

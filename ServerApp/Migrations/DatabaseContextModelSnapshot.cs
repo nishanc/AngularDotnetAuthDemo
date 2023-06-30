@@ -28,7 +28,7 @@ namespace ServerApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Todos");
+                    b.ToTable("Todos", (string)null);
                 });
 
             modelBuilder.Entity("ServerApp.Data.Models.User", b =>
@@ -51,7 +51,7 @@ namespace ServerApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 #pragma warning restore 612, 618
         }
