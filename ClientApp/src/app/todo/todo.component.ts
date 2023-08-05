@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Todo } from '../models/todo';
 import { environment } from 'src/environments/environment';
+import { NotificationService } from '../services/notification.service';
 
 
 @Component({
@@ -14,7 +15,8 @@ export class TodoComponent {
   newTodo!: string;
   todos: Todo[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.getTodos();
@@ -25,7 +27,10 @@ export class TodoComponent {
       next: (todos) => {
         this.todos = todos;
       },
-      error: (e) => console.error(e)
+      error: (e) => {
+        this.notificationService.error(`Error occurred, check console`);
+        console.error(e);
+      }
     });
   }
 
@@ -41,7 +46,10 @@ export class TodoComponent {
         this.getTodos();
         this.newTodo = '';
       },
-      error: (e) => console.error(e)
+      error: (e) => {
+        this.notificationService.error(`Error occurred, check console`);
+        console.error(e);
+      }
     });
   }
 
@@ -50,7 +58,10 @@ export class TodoComponent {
       next: () => {
         this.todos = this.todos.filter(t => t.id !== id);
       },
-      error: (e) => console.error(e)
+      error: (e) => {
+        this.notificationService.error(`Error occurred, check console`);
+        console.error(e);
+      }
     });
   }
 }

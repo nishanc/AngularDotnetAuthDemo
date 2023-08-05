@@ -8,6 +8,10 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" [(ngModel)]="password" />
 
+                <label for="group">Select Role:</label>
+                <select id="group" [(ngModel)]="selectedGroup" name="group">
+                  <option *ngFor="let group of userGroups" [value]="group.id">{{ group.groupName }}</option>
+                </select>
                 <button (click)="register()">Register</button>
             </form>
         </div>

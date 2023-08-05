@@ -1,4 +1,5 @@
-﻿using ServerApp.Data.Models;
+﻿using ServerApp.Data.DTOs;
+using ServerApp.Data.Models;
 
 namespace ServerApp.Repositories
 {
@@ -7,5 +8,6 @@ namespace ServerApp.Repositories
         Task<User> Register(User user, string password);
         Task<User?> Login(string username, string password);
         Task<bool> UserExists(string username);
+        Task<IList<UserGroupDto>> UserGroups();
     }
 }

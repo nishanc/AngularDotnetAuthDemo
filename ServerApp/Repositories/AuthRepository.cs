@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServerApp.Data;
+using ServerApp.Data.DTOs;
 using ServerApp.Data.Models;
 
 namespace ServerApp.Repositories
@@ -62,6 +63,13 @@ namespace ServerApp.Repositories
             if (await _context.Users.AnyAsync(x => x.Username == username))
                 return true;
             return false;
+        }
+
+        public async Task<IList<UserGroupDto>> UserGroups()
+        {
+            var groups = await _context.UserGroups.ToListAsync();
+            var dtoList = groups.Select(userGroup => new UserGroupDto { Id = userGroup.Id, GroupName = userGroup.GroupName }).ToList();
+            return dtoList;
         }
     }
 }

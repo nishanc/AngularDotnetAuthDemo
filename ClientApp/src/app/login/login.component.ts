@@ -18,8 +18,8 @@ export class LoginComponent {
   apiUrl: string = environment.apiUrl;
 
   constructor(
-    private http: HttpClient, 
-    private router: Router, 
+    private http: HttpClient,
+    private router: Router,
     private localStorageService: LocalStorageService,
     private notificationService: NotificationService) { }
 
@@ -35,13 +35,16 @@ export class LoginComponent {
     this.http.post<Token>(`${this.apiUrl}/Auth/login`, body, httpOptions).subscribe({
       next: (response) => {
         const tokenInfo = this.getDecodedAccessToken(response.tokenString); // decode token
-        const user = tokenInfo.unique_name; // get token expiration dateTime
+        const user = tokenInfo.unique_name;
 
-        this.localStorageService.setItem('user', user)
-        this.notificationService.success("Logged in")
+        this.localStorageService.setItem('user', user);
+        this.notificationService.success("Logged in");
         this.router.navigate(['/todo']); // redirect to TodoComponent
       },
-      error: (e) => console.error(e)
+      error: (e) => {
+        this.notificationService.error(`Error occurred, check console`);
+        console.error(e);
+      }
     });
   }
 

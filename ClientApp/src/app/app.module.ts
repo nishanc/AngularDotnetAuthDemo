@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+import { LocalStorageService } from './services/local-storage.service';
+import { NotificationService } from './services/notification.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,10 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
     HttpClientModule,
     NgHttpLoaderModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    LocalStorageService,
+    NotificationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

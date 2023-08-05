@@ -39,7 +39,8 @@ namespace ServerApp.Controllers
 
             var userToCreate = new User
             {
-                Username = userForRegisterDto.Username
+                Username = userForRegisterDto.Username,
+                UserGroupId = userForRegisterDto.Group
             };
 
             await _repo.Register(userToCreate, userForRegisterDto.Password);
@@ -80,6 +81,16 @@ namespace ServerApp.Controllers
             }
 
             return StatusCode(500);
+        }
+
+        /// <summary>
+        /// Gets available user groups
+        /// </summary>
+        [HttpGet("get-user-groups")] //<host>/api/auth/get-user-groups
+        public async Task<IActionResult> UserGroups()
+        {
+            var groups = await _repo.UserGroups();
+            return Ok(groups);
         }
     }
 }
